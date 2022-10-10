@@ -2,7 +2,7 @@
   <div>
     <div class="wrapper-slide-box">
       <div class="title">
-        <h1>Browse by Category</h1>
+        <h1>Browse by Category here</h1>
       </div>
       <div class="box-card">
                 <div class="box category-card">
