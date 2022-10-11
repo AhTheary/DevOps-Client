@@ -1,7 +1,7 @@
 <template>
   <div>
        <div class="title about-us">
-        <h1><b>ABOUT US</b></h1>
+        <h1><b>ABOUT US yesh</b></h1>
       </div>
     <div class="container-us">
       <div class="card">
