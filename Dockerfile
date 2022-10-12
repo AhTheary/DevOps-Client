@@ -8,7 +8,7 @@ WORKDIR /web
 
 # copy both 'package.json' and 'package-lock.json' (if available)
 RUN pwd
-COPY var/lib/jenkins/workspace/client/package*.json ./
+COPY /var/lib/jenkins/workspace/client/package*.json ./
 
 # install project dependencies
 RUN pwd
