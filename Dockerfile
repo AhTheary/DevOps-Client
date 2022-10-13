@@ -19,7 +19,7 @@ FROM node:lts-alpine
 # # build app for production with minification
 # RUN npm run build
 # EXPOSE 80
-WORKDIR /usr/src/app
+WORKDIR /app
 COPY COPY package*.json ./
 RUN npm install && npm run build
 
@@ -33,7 +33,7 @@ COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=ui-build /usr/src/app/dist/ /usr/share/nginx/html
+COPY --from=ui-build /app/dist/ /usr/share/nginx/html
 
 EXPOSE 4200 80
 
