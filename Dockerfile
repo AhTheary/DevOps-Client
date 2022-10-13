@@ -21,7 +21,7 @@ RUN nginx -t && systemctl reload nginx
 # Copy from the stahg 1
 COPY --from=ui-build /app/dist/ /var/www/
 
-EXPOSE 4200 80
+EXPOSE 80
 
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
