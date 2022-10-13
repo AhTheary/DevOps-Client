@@ -1,17 +1,16 @@
+# Choose the Image which has Node installed already
 FROM node:lts-alpine
 
 # install simple http server for serving static content
-# RUN npm install -g http-server
+RUN npm install -g http-server
 
 # make the 'app' folder the current working directory
-WORKDIR /web
+WORKDIR /app
 
 # copy both 'package.json' and 'package-lock.json' (if available)
-RUN pwd
-COPY /var/lib/jenkins/workspace/client/package*.json ./
+COPY package*.json ./
 
 # install project dependencies
-RUN pwd
 RUN npm install
 
 # copy project files and folders to the current working directory (i.e. 'app' folder)
@@ -19,3 +18,25 @@ COPY . .
 
 # build app for production with minification
 RUN npm run build
+EXPOSE 80
+# FROM node:lts-alpine
+
+# # install simple http server for serving static content
+# # RUN npm install -g http-server
+
+# # make the 'app' folder the current working directory
+# WORKDIR /web
+
+# # copy both 'package.json' and 'package-lock.json' (if available)
+# RUN pwd
+# COPY /var/lib/jenkins/workspace/client/package*.json ./
+
+# # install project dependencies
+# RUN pwd
+# RUN npm install
+
+# # copy project files and folders to the current working directory (i.e. 'app' folder)
+# COPY . .
+
+# # build app for production with minification
+# RUN npm run build
