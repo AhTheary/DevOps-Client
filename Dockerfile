@@ -1,5 +1,33 @@
+# stage1 as builder
+FROM node:10-alpine as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install 
+COPY . .
+RUN npm run build
+
+FROM nginx:alpine as production-build
+
+#!/bin/sh
+
+COPY ./.nginx/client  /etc/nginx/sites-available/client
+
+RUN ln -s /etc/nginx/sites-available/client /etc/nginx/sites-enabled/client
+
+RUN nginx -t && systemctl reload nginx
+## Remove default nginx index page
+# RUN rm -rf /usr/share/nginx/html/*
+
+# Copy from the stahg 1
+COPY --from=ui-build /app/dist/ /var/www/
+
+EXPOSE 4200 80
+
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+
 # Choose the Image which has Node installed already
-FROM node:lts-alpine
+# FROM node:lts-alpine
 
 # install simple http server for serving static content
 # RUN npm install -g http-server
@@ -19,25 +47,6 @@ FROM node:lts-alpine
 # # build app for production with minification
 # RUN npm run build
 # EXPOSE 80
-WORKDIR /app
-COPY COPY package*.json ./
-RUN npm install && npm run build
-
-FROM nginx:alpine
-
-#!/bin/sh
-
-COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
-
-## Remove default nginx index page
-RUN rm -rf /usr/share/nginx/html/*
-
-# Copy from the stahg 1
-COPY --from=ui-build /app/dist/ /usr/share/nginx/html
-
-EXPOSE 4200 80
-
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
 # FROM node:lts-alpine
 
 # # install simple http server for serving static content
