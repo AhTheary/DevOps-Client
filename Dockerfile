@@ -1,9 +1,9 @@
 # stage1 as builder
 FROM node:14-alpine as builder
 WORKDIR /app
-RUN pwd
+RUN pwd && whoami
 COPY package*.json ./
-RUN npm install 
+RUN pwd && npm install 
 COPY . .
 RUN pwd && npm run build
 
