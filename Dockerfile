@@ -1,31 +1,31 @@
 # stage1 as builder
-FROM node:14-alpine as builder
+# stage1 as builder
+FROM node:10-alpine as builder
+
 WORKDIR /app
-RUN pwd && whoami
+
+# Copy the package.json and install dependencies
 COPY package*.json ./
-RUN pwd && npm install 
+RUN npm install
+
+# Copy rest of the files
 COPY . .
-RUN pwd && npm run build
+
+# Build the project
+RUN npm run build
+
 
 FROM nginx:alpine as production-build
+COPY ./.nginx/nginx.conf /etc/nginx/nginx.conf
 
-#!/bin/sh
-
-COPY ./.nginx/client  /etc/nginx/sites-available/
-
-RUN pwd && ln -s /etc/nginx/sites-available/client /etc/nginx/sites-enabled/
-
-RUN nginx -t && systemctl reload nginx
 ## Remove default nginx index page
-# RUN rm -rf /usr/share/nginx/html/*
+RUN rm -rf /usr/share/nginx/html/*
 
 # Copy from the stahg 1
-COPY --from=ui-build /app/dist/ /var/www/
+COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 80
-
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
-
 
 # Choose the Image which has Node installed already
 # FROM node:lts-alpine
