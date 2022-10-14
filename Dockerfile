@@ -1,19 +1,19 @@
 # stage1 as builder
 FROM node:14-alpine as builder
 WORKDIR /app
+RUN pwd
 COPY package*.json ./
-RUN node -v
 RUN npm install 
 COPY . .
-RUN npm run build
+RUN pwd && npm run build
 
 FROM nginx:alpine as production-build
 
 #!/bin/sh
 
-COPY ./.nginx/client  /etc/nginx/sites-available/client
+COPY ./.nginx/client  /etc/nginx/sites-available/
 
-RUN ln -s /etc/nginx/sites-available/client /etc/nginx/sites-enabled/client
+RUN pwd && ln -s /etc/nginx/sites-available/client /etc/nginx/sites-enabled/
 
 RUN nginx -t && systemctl reload nginx
 ## Remove default nginx index page
