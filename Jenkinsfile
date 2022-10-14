@@ -22,37 +22,37 @@ pipeline {
             }
         }
 
-        stage('Building image') {
-            steps{
-                script {
-                    dockerImage = docker.build registry + ":$BUILD_NUMBER"
-                }
-            }
-        }
+    //     stage('Building image') {
+    //         steps{
+    //             script {
+    //                 dockerImage = docker.build registry + ":$BUILD_NUMBER"
+    //             }
+    //         }
+    //     }
 
-        stage('Deploy Image') {
-            steps{
-                script {
-                    docker.withRegistry( '', registryCredential ) {
-                        dockerImage.push()
-                    }
-                }
-            }
-        }
-        stage('docker stop container') {
-        steps {
-            sh 'docker ps -f name=mywebContainer -q | xargs --no-run-if-empty docker container stop'
-            sh 'docker container ls -a -fname=mywebContainer -q | xargs -r docker container rm'
-        }
-    }
+    //     stage('Deploy Image') {
+    //         steps{
+    //             script {
+    //                 docker.withRegistry( '', registryCredential ) {
+    //                     dockerImage.push()
+    //                 }
+    //             }
+    //         }
+    //     }
+    //     stage('docker stop container') {
+    //     steps {
+    //         sh 'docker ps -f name=mywebContainer -q | xargs --no-run-if-empty docker container stop'
+    //         sh 'docker container ls -a -fname=mywebContainer -q | xargs -r docker container rm'
+    //     }
+    // }
 
-        stage('Docker Run') {
-            steps{
-                script {
-                    dockerImage.run("-p 80:80 --rm --name mywebContainer")
-                }
-            }
-        }
+    //     stage('Docker Run') {
+    //         steps{
+    //             script {
+    //                 dockerImage.run("-p 80:80 --rm --name mywebContainer")
+    //             }
+    //         }
+    //     }
     }
 }
 // pipeline {
