@@ -12,7 +12,7 @@ FROM nginx:alpine as production-build
 #!/bin/sh
 
 COPY ./.nginx/client  /etc/nginx/sites-available/client
-
+RUN mkdir /etc/nginx/sites-enabled/client
 RUN ln -s /etc/nginx/sites-available/client /etc/nginx/sites-enabled/client
 
 RUN nginx -t && systemctl reload nginx
