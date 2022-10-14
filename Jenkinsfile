@@ -49,7 +49,11 @@ pipeline {
         stage('Docker Run') {
             steps{
                 script {
+<<<<<<< HEAD
                     dockerImage.run("-p 3000:3000 --rm --name mywebContainer")
+=======
+                    dockerImage.run("-p 80:80 --rm --name mywebContainer")
+>>>>>>> 022eb143d007e7a0534678c81de9d8734ebe1f4a
                 }
             }
         }
