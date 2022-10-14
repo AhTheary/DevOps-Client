@@ -24,7 +24,7 @@ RUN rm -rf /usr/share/nginx/html/*
 # Copy from the stahg 1
 COPY --from=builder /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE 3000
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
 
 # Choose the Image which has Node installed already
