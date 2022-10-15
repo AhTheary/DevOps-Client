@@ -1,5 +1,4 @@
 # stage1 as builder
-# stage1 as builder
 FROM node:14-alpine as builder
 
 WORKDIR /app
@@ -26,6 +25,31 @@ COPY --from=builder /app/dist /usr/share/nginx/html
 
 EXPOSE 3000
 ENTRYPOINT ["nginx", "-g", "daemon off;"]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 # Choose the Image which has Node installed already
 # FROM node:lts-alpine
