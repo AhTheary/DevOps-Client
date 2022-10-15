@@ -1,12 +1,14 @@
 pipeline {
+    agent any
     environment {
         registry = "theay003/devops"
         registryCredential = 'dockerhub_id'
         dockerImage = ''
     }
 
-    agent any
-
+    tools {
+    nodejs 'Nodejs'
+    }
     stages {
 
         stage('git clone frontend') {
@@ -18,7 +20,7 @@ pipeline {
 
         stage('Build') {
             steps {
-                sh 'cd /var/lib/jenkins/workspace/client && npm install '
+                sh 'npm install '
             }
         }
 
